@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+    <title>Catálogo Completo - GOLDEN STEP</title>
+    <style>
+        .catalogo-header {
+            padding: 60px 40px 20px;
+            text-align: center;
+        }
+        .catalogo-header h1 {
+            font-size: 2rem;
+            margin-bottom: 8px;
+        }
+        .catalogo-header p {
+            color: #666;
+            font-size: 1rem;
+        }
+        .catalogo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 28px;
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">GOLDEN STEP</div>
+        <ul class="nav-links">
+            <li><a href="/">INICIO</a></li>
+            <li><a href="/#colecciones">COLECCIONES</a></li>
+            <li><a href="/#contacto">CONTACTO</a></li>
+        </ul>
+        <a href="/carrito" class="cart-icon">
+            🛒<span id="cart-count">0</span>
+        </a>
+        <button class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <div class="catalogo-header">
+        <h1>Catálogo Completo</h1>
+        <p>Todos nuestros modelos disponibles</p>
+    </div>
+
+    <main>
+        <div class="catalogo-grid">
+            {% for p in productos %}
+            <div class="card">
+                <div class="card-img">
+                    <img src="/static/{{ p.imagen }}" alt="{{ p.nombre }}">
+                </div>
+                <div class="card-body">
+                    {% if p.tag %}
+                        <span class="tag {% if p.tag == 'Nuevo' %}tag-new{% else %}tag-hot{% endif %}">{{ p.tag }}</span>
+                    {% endif %}
+                    <h3>{{ p.nombre }}</h3>
+                    <p>{{ p.descripcion }}</p>
+                    <p class="price">Desde s/.{{ p.precio | int }}</p>
+                    <button class="btn-carrito"
+                        data-nombre="{{ p.nombre }}"
+                        data-precio="{{ p.precio }}"
+                        data-img="/static/{{ p.imagen }}">
+                        agregar al carrito
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026. Todos los derechos reservados.</p>
+    </footer>
+
+</body>
+</html>

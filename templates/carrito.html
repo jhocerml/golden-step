@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+    <title>Carrito - Golden Step</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">GOLDEN STEP</div>
+        <ul class="nav-links">
+            <li><a href="/">INICIO</a></li>
+            <li><a href="/#colecciones">COLECCIONES</a></li>
+            <li><a href="/#contacto">CONTACTO</a></li>
+        </ul>
+        <a href="/carrito" class="cart-icon">
+            🛒 <span id="cart-count">0</span>
+        </a>
+    </nav>
+
+    <main class="carrito-page">
+        <h2>Tu carrito</h2>
+
+     <div id="carrito-vacio" style="display:none">
+       <div class="carrito-vacio-contenido">
+        <p class="carrito-vacio-label">CARRITO</p>
+        <h3>No hay productos aún</h3>
+        <p>Explora nuestras colecciones y encuentra tu par ideal</p>
+        <a href="/" class="btn-primary">Ver colecciones</a>
+        </div>
+     </div>
+
+        <div id="carrito-contenido">
+            <div id="carrito-items"></div>
+
+            <div class="carrito-resumen">
+                <p>Subtotal: <strong>s/.<span id="subtotal">0</span></strong></p>
+                <p>Envío: <strong>s/.10</strong></p>
+                <hr>
+                <p>Total: <strong>s/.<span id="total">0</span></strong></p>
+                <a href="/checkout" class="btn-primary" id="btn-checkout">
+                    Realizar pedido
+                </a>
+                <button class="btn-vaciar" id="btn-vaciar">
+                    Vaciar carrito
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="../static/app.js"></script>
+</body>
+</html>>

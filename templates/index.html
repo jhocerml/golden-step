@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/app.js" defer></script>
+    <title>GOLDEN STEP</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">GOLDEN STEP</div>
+        <ul class="nav-links">
+            <li><a href="#inicio">INICIO</a></li>
+            <li><a href="#colecciones">COLECCIONES</a></li>
+            <li><a href="#contacto">CONTACTO</a></li>
+        </ul>
+        <a href="/carrito" class="cart-icon">
+            🛒<span id="cart-count">0</span>
+        </a>
+        <button class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <header id="inicio" class="hero-section">
+        <div>
+            <h1>Camina con estilo</h1>
+            <p>Descubre nuestra nueva colección de calzados</p>
+            <a href="#colecciones" class="btn-primary">Ver colecciones</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="colecciones">
+            <h2>Colecciones</h2>
+
+            <div class="cards">
+                {% for p in productos %}
+                <div class="card">
+                    <div class="card-img">
+                        <img src="/static/{{ p.imagen }}" alt="{{ p.nombre }}">
+                    </div>
+                    <div class="card-body">
+                        {% if p.tag %}
+                            <span class="tag {% if p.tag == 'Nuevo' %}tag-new{% else %}tag-hot{% endif %}">{{ p.tag }}</span>
+                        {% endif %}
+                        <h3>{{ p.nombre }}</h3>
+                        <p>{{ p.descripcion }}</p>
+                        <p class="price">Desde s/.{{ p.precio | int }}</p>
+                        <button class="btn-carrito"
+                            data-nombre="{{ p.nombre }}"
+                            data-precio="{{ p.precio }}"
+                            data-img="/static/{{ p.imagen }}">
+                            agregar al carrito
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- BOTÓN VER CATÁLOGO COMPLETO -->
+            <div style="text-align: center; margin: 40px 0;">
+                <a href="/catalogo" class="btn-primary">Ver catálogo completo</a>
+            </div>
+
+        </section>
+
+        <section id="contacto" class="contact-section">
+            <h2>contacto</h2>
+            <form id="contact-form" method="POST" action="/send_email">
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <div id="flash-messages" class="flash-messages"></div>
+              <input type="text" name="nombre" placeholder="Nombre" required>
+              <input type="email" name="correo" placeholder="Correo Electrónico" required>
+             <textarea name="mensaje" placeholder="mensaje" required></textarea>
+             <button type="submit">enviar mensaje</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

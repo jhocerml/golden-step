@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Checkout - Golden Step</title>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">GOLDEN STEP</div>
+        <ul class="nav-links">
+            <li><a href="/">INICIO</a></li>
+            <li><a href="/#colecciones">COLECCIONES</a></li>
+            <li><a href="/#contacto">CONTACTO</a></li>
+        </ul>
+        <a href="/carrito" class="cart-icon">
+            🛒 <span id="cart-count">0</span>
+        </a>
+    </nav>
+
+    <main class="checkout-page">
+        <div class="checkout-contenido">
+
+            <div class="checkout-form-seccion">
+                <p class="checkout-label">GOLDEN STEP</p>
+                <h2>Finalizar pedido</h2>
+
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label>Nombre completo</label>
+                        <input type="text" id="nombre"required>
+                    </div>
+                    <div class="form-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="telefono" placeholder=""required>
+                    </div>
+                    <div class="form-group">
+                        <label>Dirección</label>
+                        <input type="text" id="direccion" placeholder=""required>
+                    </div>
+                    <div class="form-group">
+                        <label>Ciudad</label>
+                        <input type="text" id="ciudad" placeholder="" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Referencia</label>
+                        <input type="text" id="referencia" placeholder="">
+                    </div>
+                    <button type="submit" class="btn-primary" id="btn-confirmar">
+                        Confirmar pedido
+                    </button>
+                </form>
+            </div>
+
+            <div class="checkout-resumen-seccion">
+                <h3>Resumen del pedido</h3>
+                <div id="checkout-items"></div>
+                <hr>
+                <div class="checkout-totales">
+                    <p>Subtotal: <span id="checkout-subtotal">s/.0</span></p>
+                    <p>Envío: <span>s/.10</span></p>
+                    <p class="checkout-total-final">Total: <span id="checkout-total">s/.0</span></p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="checkout-exito" style="display:none">
+        <div class="exito-contenido">
+            <div class="exito-icono">✓</div>
+            <h2>¡Pedido confirmado!</h2>
+            <p>Gracias por tu compra. Nos contactaremos pronto.</p>
+            <a href="/" class="btn-primary">Volver a la tienda</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="/static/app.js" defer></script>
+</body>
+</html>

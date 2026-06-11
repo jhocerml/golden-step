@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Admin - Golden Step</title>
+</head>
+<body style="background:#f5f5f5; display:flex; align-items:center; justify-content:center; min-height:100vh;">
+
+    <div style="background:white; padding:40px; border-radius:16px; box-shadow:0 4px 24px rgba(0,0,0,0.08); width:100%; max-width:400px;">
+        <p style="font-size:11px; letter-spacing:4px; color:#C9A84C; font-weight:600; margin-bottom:8px;">GOLDEN STEP</p>
+        <h2 style="font-size:24px; font-weight:700; margin-bottom:30px;">Panel Admin</h2>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="alert {{ category }}" style="margin-bottom:16px;">{{ message }}</div>
+            {% endfor %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="form-group">
+                <label>Usuario</label>
+                <input type="text" name="usuario" placeholder="admin" required>
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input type="password" name="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%; text-align:center;">
+                Ingresar
+            </button>
+        </form>
+    </div>
+
+</body>
+</html>
