@@ -198,36 +198,36 @@ def eliminar_mensaje(id):
     db.session.commit()
     return redirect(url_for('admin_panel'))
 
+with app.app_context():
+    db.create_all()
+
+    if not Admin.query.filter_by(usuario=os.getenv('ADMIN_USUARIO')).first():
+        admin = Admin(
+            usuario=os.getenv('ADMIN_USUARIO'),
+            password=generate_password_hash(os.getenv('ADMIN_PASSWORD'))
+        )
+        db.session.add(admin)
+        db.session.commit()
+        print("Admin creado")
+
+    if not Producto.query.first():
+        productos_iniciales = [
+            Producto(nombre='Colección Verano', descripcion='Piezas ligeras para días cálidos', precio=90, imagen='3.avif', tag='Nuevo'),
+            Producto(nombre='Colección Noche', descripcion='Elegancia para ocasiones especiales', precio=129, imagen='22.jpeg', tag='Popular'),
+            Producto(nombre='Colección Casual', descripcion='Comodidad y estilo en cada paso', precio=59, imagen='11.jpeg', tag=None),
+            Producto(nombre='Modelo Clásico', descripcion='Diseño atemporal para cualquier ocasión', precio=75, imagen='0.jpeg', tag=None),
+            Producto(nombre='Edición Urbana', descripcion='Para el ritmo de la ciudad', precio=110, imagen='8.jpeg', tag='Popular'),
+            Producto(nombre='Sport Plus', descripcion='Rendimiento y comodidad al máximo', precio=95, imagen='9.jpeg', tag='Nuevo'),
+            Producto(nombre='Colección Premium', descripcion='Materiales de primera calidad', precio=149, imagen='14.jpeg', tag=None),
+            Producto(nombre='Estilo Retro', descripcion='El look clásico que nunca pasa de moda', precio=85, imagen='77.jpeg', tag=None),
+            Producto(nombre='Colección Street', descripcion='Moda urbana con actitud', precio=99, imagen='88.jpeg', tag='Popular'),
+            Producto(nombre='Modelo Deportivo', descripcion='Ideal para el día a día activo', precio=80, imagen='331.jpeg', tag=None),
+            Producto(nombre='Edición Limitada', descripcion='Exclusividad en cada detalle', precio=189, imagen='441.jpeg', tag='Nuevo'),
+            Producto(nombre='Colección Everyday', descripcion='Para lucir bien todos los días', precio=69, imagen='pp.jpeg', tag=None),
+        ]
+        db.session.add_all(productos_iniciales)
+        db.session.commit()
+        print("Productos iniciales creados")
+
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
-
-        if not Admin.query.filter_by(usuario=os.getenv('ADMIN_USUARIO')).first():
-            admin = Admin(
-              usuario=os.getenv('ADMIN_USUARIO'),
-              password=generate_password_hash(os.getenv('ADMIN_PASSWORD'))
-            )
-            db.session.add(admin)
-            db.session.commit()
-            print("Admin creado: usuario=admin, password=golden2025")
-
-        if not Producto.query.first():
-            productos_iniciales = [
-                Producto(nombre='Colección Verano', descripcion='Piezas ligeras para días cálidos', precio=90, imagen='3.avif', tag='Nuevo'),
-                Producto(nombre='Colección Noche', descripcion='Elegancia para ocasiones especiales', precio=129, imagen='22.jpeg', tag='Popular'),
-                Producto(nombre='Colección Casual', descripcion='Comodidad y estilo en cada paso', precio=59, imagen='11.jpeg', tag=None),
-                Producto(nombre='Modelo Clásico', descripcion='Diseño atemporal para cualquier ocasión', precio=75, imagen='0.jpeg', tag=None),
-                Producto(nombre='Edición Urbana', descripcion='Para el ritmo de la ciudad', precio=110, imagen='8.jpeg', tag='Popular'),
-                Producto(nombre='Sport Plus', descripcion='Rendimiento y comodidad al máximo', precio=95, imagen='9.jpeg', tag='Nuevo'),
-                Producto(nombre='Colección Premium', descripcion='Materiales de primera calidad', precio=149, imagen='14.jpeg', tag=None),
-                Producto(nombre='Estilo Retro', descripcion='El look clásico que nunca pasa de moda', precio=85, imagen='77.jpeg', tag=None),
-                Producto(nombre='Colección Street', descripcion='Moda urbana con actitud', precio=99, imagen='88.jpeg', tag='Popular'),
-                Producto(nombre='Modelo Deportivo', descripcion='Ideal para el día a día activo', precio=80, imagen='331.jpeg', tag=None),
-                Producto(nombre='Edición Limitada', descripcion='Exclusividad en cada detalle', precio=189, imagen='441.jpeg', tag='Nuevo'),
-                Producto(nombre='Colección Everyday', descripcion='Para lucir bien todos los días', precio=69, imagen='pp.jpeg', tag=None),
-            ]
-            db.session.add_all(productos_iniciales)
-            db.session.commit()
-            print("Productos iniciales creados")
-
     app.run(debug=os.getenv('FLASK_DEBUG', '0') == '1')
