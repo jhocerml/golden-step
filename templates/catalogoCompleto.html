@@ -112,8 +112,6 @@
 
     <!-- FILTRO POR CATEGORÍA -->
     <div class="filtros-categoria">
-        <a href="/catalogo?categoria=todos&tipo={{ tipo_actual }}"
-           class="filtro-btn {% if categoria_actual == 'todos' %}active{% endif %}">TODOS</a>
         <a href="/catalogo?categoria=mujer&tipo={{ tipo_actual }}"
            class="filtro-btn {% if categoria_actual == 'mujer' %}active{% endif %}">MUJER</a>
         <a href="/catalogo?categoria=hombre&tipo={{ tipo_actual }}"
@@ -124,8 +122,6 @@
 
     <!-- FILTRO POR TIPO -->
     <div class="filtros-tipo">
-        <a href="/catalogo?categoria={{ categoria_actual }}&tipo=todos"
-           class="filtro-tipo-btn {% if tipo_actual == 'todos' %}active{% endif %}">Todos</a>
         <a href="/catalogo?categoria={{ categoria_actual }}&tipo=zapatillas"
            class="filtro-tipo-btn {% if tipo_actual == 'zapatillas' %}active{% endif %}">Zapatillas</a>
         <a href="/catalogo?categoria={{ categoria_actual }}&tipo=accesorios"

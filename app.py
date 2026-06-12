@@ -106,16 +106,10 @@ def checkout():
 
 @app.route('/catalogo')
 def catalogo():
-    categoria = request.args.get('categoria', 'todos')
-    tipo = request.args.get('tipo', 'todos')
+    categoria = request.args.get('categoria', 'mujer')
+    tipo = request.args.get('tipo', 'zapatillas')
 
-    query = Producto.query.filter_by(activo=True)
-    if categoria != 'todos':
-        query = query.filter_by(categoria=categoria)
-    if tipo != 'todos':
-        query = query.filter_by(tipo=tipo)
-
-    productos = query.all()
+    productos = Producto.query.filter_by(activo=True, categoria=categoria, tipo=tipo).all()
     return render_template('catalogoCompleto.html', productos=productos,
                             categoria_actual=categoria, tipo_actual=tipo)
 
