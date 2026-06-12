@@ -121,14 +121,16 @@ function renderizarCarrito() {
             <div class="carrito-item-info">
                 <h3>${item.nombre}</h3>
                 <p>s/.${item.precio}</p>
+                <div class="carrito-item-controles">
+                    <div class="carrito-item-cantidad">
+                        <button onclick="cambiarCantidad(${index}, -1)">−</button>
+                        <span>${item.cantidad}</span>
+                        <button onclick="cambiarCantidad(${index}, 1)">+</button>
+                    </div>
+                    <p class="carrito-item-subtotal">s/.${item.precio * item.cantidad}</p>
+                    <button class="btn-eliminar" onclick="eliminarItem(${index})">✕</button>
+                </div>
             </div>
-            <div class="carrito-item-cantidad">
-                <button onclick="cambiarCantidad(${index}, -1)">−</button>
-                <span>${item.cantidad}</span>
-                <button onclick="cambiarCantidad(${index}, 1)">+</button>
-            </div>
-            <p class="carrito-item-subtotal">s/.${item.precio * item.cantidad}</p>
-            <button class="btn-eliminar" onclick="eliminarItem(${index})">✕</button>
         </div>
     `).join('');
 

@@ -395,10 +395,16 @@ footer {
 
 .carrito-item {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 16px;
     padding: 16px 0;
     border-bottom: 1px solid #eee;
+}
+.carrito-item-controles {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
 }
 
 .carrito-item img {
@@ -437,7 +443,7 @@ footer {
 }
 
 .carrito-resumen {
-    max-width: 300px;
+    width: 100%;
     background: #f9f9f9;
     padding: 24px;
     border-radius: 12px;
