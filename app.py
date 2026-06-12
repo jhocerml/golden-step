@@ -62,6 +62,8 @@ class Producto(db.Model):
     imagen = db.Column(db.String(100), nullable=False)
     tag = db.Column(db.String(50))
     activo = db.Column(db.Boolean, default=True)
+    categoria = db.Column(db.String(20), nullable=False, default='hombre')
+    tipo = db.Column(db.String(20), nullable=False, default='zapatillas')
 
 class Pedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -104,8 +106,18 @@ def checkout():
 
 @app.route('/catalogo')
 def catalogo():
-    productos = Producto.query.filter_by(activo=True).all()
-    return render_template('catalogoCompleto.html', productos=productos)
+    categoria = request.args.get('categoria', 'todos')
+    tipo = request.args.get('tipo', 'todos')
+
+    query = Producto.query.filter_by(activo=True)
+    if categoria != 'todos':
+        query = query.filter_by(categoria=categoria)
+    if tipo != 'todos':
+        query = query.filter_by(tipo=tipo)
+
+    productos = query.all()
+    return render_template('catalogoCompleto.html', productos=productos,
+                            categoria_actual=categoria, tipo_actual=tipo)
 
 @app.route('/send_email', methods=['POST'])
 def send_email():
@@ -212,18 +224,18 @@ with app.app_context():
 
     if not Producto.query.first():
         productos_iniciales = [
-            Producto(nombre='Colección Verano', descripcion='Piezas ligeras para días cálidos', precio=90, imagen='3.avif', tag='Nuevo'),
-            Producto(nombre='Colección Noche', descripcion='Elegancia para ocasiones especiales', precio=129, imagen='22.jpeg', tag='Popular'),
-            Producto(nombre='Colección Casual', descripcion='Comodidad y estilo en cada paso', precio=59, imagen='11.jpeg', tag=None),
-            Producto(nombre='Modelo Clásico', descripcion='Diseño atemporal para cualquier ocasión', precio=75, imagen='0.jpeg', tag=None),
-            Producto(nombre='Edición Urbana', descripcion='Para el ritmo de la ciudad', precio=110, imagen='8.jpeg', tag='Popular'),
-            Producto(nombre='Sport Plus', descripcion='Rendimiento y comodidad al máximo', precio=95, imagen='9.jpeg', tag='Nuevo'),
-            Producto(nombre='Colección Premium', descripcion='Materiales de primera calidad', precio=149, imagen='14.jpeg', tag=None),
-            Producto(nombre='Estilo Retro', descripcion='El look clásico que nunca pasa de moda', precio=85, imagen='77.jpeg', tag=None),
-            Producto(nombre='Colección Street', descripcion='Moda urbana con actitud', precio=99, imagen='88.jpeg', tag='Popular'),
-            Producto(nombre='Modelo Deportivo', descripcion='Ideal para el día a día activo', precio=80, imagen='331.jpeg', tag=None),
-            Producto(nombre='Edición Limitada', descripcion='Exclusividad en cada detalle', precio=189, imagen='441.jpeg', tag='Nuevo'),
-            Producto(nombre='Colección Everyday', descripcion='Para lucir bien todos los días', precio=69, imagen='pp.jpeg', tag=None),
+            Producto(nombre='Colección Verano', descripcion='Piezas ligeras para días cálidos', precio=90, imagen='3.avif', tag='Nuevo', categoria='mujer', tipo='zapatillas'),
+            Producto(nombre='Colección Noche', descripcion='Elegancia para ocasiones especiales', precio=129, imagen='22.jpeg', tag='Popular', categoria='mujer', tipo='zapatillas'),
+            Producto(nombre='Colección Casual', descripcion='Comodidad y estilo en cada paso', precio=59, imagen='11.jpeg', tag=None, categoria='mujer', tipo='accesorios'),
+            Producto(nombre='Modelo Clásico', descripcion='Diseño atemporal para cualquier ocasión', precio=75, imagen='0.jpeg', tag=None, categoria='hombre', tipo='zapatillas'),
+            Producto(nombre='Edición Urbana', descripcion='Para el ritmo de la ciudad', precio=110, imagen='8.jpeg', tag='Popular', categoria='hombre', tipo='zapatillas'),
+            Producto(nombre='Sport Plus', descripcion='Rendimiento y comodidad al máximo', precio=95, imagen='9.jpeg', tag='Nuevo', categoria='hombre', tipo='accesorios'),
+            Producto(nombre='Colección Premium', descripcion='Materiales de primera calidad', precio=149, imagen='14.jpeg', tag=None, categoria='hombre', tipo='zapatillas'),
+            Producto(nombre='Estilo Retro', descripcion='El look clásico que nunca pasa de moda', precio=85, imagen='77.jpeg', tag=None, categoria='niños', tipo='zapatillas'),
+            Producto(nombre='Colección Street', descripcion='Moda urbana con actitud', precio=99, imagen='88.jpeg', tag='Popular', categoria='niños', tipo='zapatillas'),
+            Producto(nombre='Modelo Deportivo', descripcion='Ideal para el día a día activo', precio=80, imagen='331.jpeg', tag=None, categoria='niños', tipo='accesorios'),
+            Producto(nombre='Edición Limitada', descripcion='Exclusividad en cada detalle', precio=189, imagen='441.jpeg', tag='Nuevo', categoria='mujer', tipo='accesorios'),
+            Producto(nombre='Colección Everyday', descripcion='Para lucir bien todos los días', precio=69, imagen='pp.jpeg', tag=None, categoria='hombre', tipo='accesorios'),
         ]
         db.session.add_all(productos_iniciales)
         db.session.commit()
