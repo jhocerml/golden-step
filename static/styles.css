@@ -389,8 +389,8 @@ footer {
 
 #carrito-contenido {
     display: flex;
-    gap: 40px;
-    align-items: flex-start;
+    flex-direction: column;
+    gap: 24px;
 }
 
 .carrito-item {
@@ -437,12 +437,11 @@ footer {
 }
 
 .carrito-resumen {
-    min-width: 250px;
+    max-width: 300px;
     background: #f9f9f9;
     padding: 24px;
     border-radius: 12px;
 }
-
 .carrito-resumen p {
     margin: 8px 0;
 }
