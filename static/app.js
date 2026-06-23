@@ -86,41 +86,99 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// Agregar al carrito con talla y color
+// MODAL
+let productoActual = {};
+
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('btn-carrito')) {
         const card = e.target.closest('.card');
-        const tallaSeleccionada = card.querySelector('.opcion-talla.selected');
-        const colorSeleccionado = card.querySelector('.opcion-color.selected');
+        
+        productoActual = {
+            nombre: e.target.dataset.nombre,
+            precio: parseFloat(e.target.dataset.precio),
+            img: e.target.dataset.img,
+            tallas: e.target.dataset.tallas,
+            colores: e.target.dataset.colores
+        };
 
-        if (!tallaSeleccionada) {
-            alert('Por favor selecciona una talla');
-            return;
-        }
-        if (!colorSeleccionado) {
-            alert('Por favor selecciona un color');
-            return;
-        }
+        // Llenar modal
+        document.getElementById('modal-img').src = productoActual.img;
+        document.getElementById('modal-nombre').textContent = productoActual.nombre;
+        document.getElementById('modal-precio').textContent = 's/.' + productoActual.precio;
 
-        const nombre = e.target.dataset.nombre;
-        const precio = parseFloat(e.target.dataset.precio);
-        const img = e.target.dataset.img;
-        const talla = tallaSeleccionada.textContent;
-        const color = colorSeleccionado.textContent;
+        // Tallas
+        const tallasDiv = document.getElementById('modal-tallas');
+        tallasDiv.innerHTML = productoActual.tallas.split(',').map(t =>
+            `<button type="button">${t.trim()}</button>`
+        ).join('');
 
-        let carrito = obtenerCarrito();
-        const existe = carrito.find(item => item.nombre === nombre && item.talla === talla && item.color === color);
+        // Colores
+        const coloresDiv = document.getElementById('modal-colores');
+        coloresDiv.innerHTML = productoActual.colores.split(',').map(c =>
+            `<button type="button">${c.trim()}</button>`
+        ).join('');
 
-        if (existe) {
-            existe.cantidad += 1;
-        } else {
-            carrito.push({ nombre, precio, img, talla, color, cantidad: 1 });
-        }
-
-        guardarCarrito(carrito);
-        e.target.textContent = '✓ Agregado';
-        setTimeout(() => e.target.textContent = 'agregar al carrito', 1500);
+        // Mostrar modal
+        document.getElementById('modal-producto').style.display = 'flex';
     }
+});
+
+// Selección dentro del modal
+document.addEventListener('click', function(e) {
+    if (e.target.closest('#modal-tallas')) {
+        document.querySelectorAll('#modal-tallas button').forEach(b => b.classList.remove('selected'));
+        e.target.classList.add('selected');
+    }
+    if (e.target.closest('#modal-colores')) {
+        document.querySelectorAll('#modal-colores button').forEach(b => b.classList.remove('selected'));
+        e.target.classList.add('selected');
+    }
+});
+
+// Cerrar modal
+document.getElementById('modal-cerrar').addEventListener('click', () => {
+    document.getElementById('modal-producto').style.display = 'none';
+});
+
+document.getElementById('modal-producto').addEventListener('click', function(e) {
+    if (e.target === this) this.style.display = 'none';
+});
+
+// Confirmar agregar al carrito
+document.getElementById('modal-confirmar').addEventListener('click', () => {
+    const talla = document.querySelector('#modal-tallas button.selected');
+    const color = document.querySelector('#modal-colores button.selected');
+
+    if (!talla) { alert('Por favor selecciona una talla'); return; }
+    if (!color) { alert('Por favor selecciona un color'); return; }
+
+    let carrito = obtenerCarrito();
+    const existe = carrito.find(item =>
+        item.nombre === productoActual.nombre &&
+        item.talla === talla.textContent &&
+        item.color === color.textContent
+    );
+
+    if (existe) {
+        existe.cantidad += 1;
+    } else {
+        carrito.push({
+            nombre: productoActual.nombre,
+            precio: productoActual.precio,
+            img: productoActual.img,
+            talla: talla.textContent,
+            color: color.textContent,
+            cantidad: 1
+        });
+    }
+
+    guardarCarrito(carrito);
+    document.getElementById('modal-producto').style.display = 'none';
+
+    // Feedback visual
+    const btnConfirmar = document.getElementById('modal-confirmar');
+    btnConfirmar.textContent = '✓ Agregado';
+    setTimeout(() => btnConfirmar.textContent = 'Agregar al carrito', 1500);
 });
 
 // Si estamos en la página /carrito
