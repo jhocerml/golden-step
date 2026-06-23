@@ -120,13 +120,6 @@
            class="filtro-btn {% if categoria_actual == 'niños' %}active{% endif %}">NIÑOS</a>
     </div>
 
-    <!-- FILTRO POR TIPO -->
-    <div class="filtros-tipo">
-        <a href="/catalogo?categoria={{ categoria_actual }}&tipo=zapatillas"
-           class="filtro-tipo-btn {% if tipo_actual == 'zapatillas' %}active{% endif %}">Zapatillas</a>
-        <a href="/catalogo?categoria={{ categoria_actual }}&tipo=accesorios"
-           class="filtro-tipo-btn {% if tipo_actual == 'accesorios' %}active{% endif %}">Accesorios</a>
-    </div>
 
     <main>
         {% if productos %}
