@@ -64,7 +64,8 @@ class Producto(db.Model):
     activo = db.Column(db.Boolean, default=True)
     categoria = db.Column(db.String(20), nullable=False, default='hombre')
     tipo = db.Column(db.String(20), nullable=False, default='zapatillas')
-
+    tallas = db.Column(db.String(100), default='38,39,40,41,42,43,44')
+    colores = db.Column(db.String(100), default='Negro,Blanco,Gris')
 class Pedido(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
