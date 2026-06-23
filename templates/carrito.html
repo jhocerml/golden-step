@@ -21,25 +21,42 @@
     </nav>
 
     <main class="carrito-page">
-        <h2>Tu carrito</h2>
 
-     <div id="carrito-vacio" style="display:none">
-       <div class="carrito-vacio-contenido">
-        <p class="carrito-vacio-label">CARRITO</p>
-        <h3>No hay productos aún</h3>
-        <p>Explora nuestras colecciones y encuentra tu par ideal</p>
-        <a href="/" class="btn-primary">Ver colecciones</a>
+        <div class="carrito-header">
+            <p class="carrito-label">GOLDEN STEP</p>
+            <h2>Tu carrito</h2>
         </div>
-     </div>
 
+        <!-- CARRITO VACÍO -->
+        <div id="carrito-vacio" style="display:none">
+            <div class="carrito-vacio-contenido">
+                <div class="carrito-vacio-icono">🛒</div>
+                <p class="carrito-vacio-label">CARRITO VACÍO</p>
+                <h3>No hay productos aún</h3>
+                <p>Explora nuestras colecciones y encuentra tu par ideal</p>
+                <a href="/" class="btn-primary">Ver colecciones</a>
+            </div>
+        </div>
+
+        <!-- CARRITO CON PRODUCTOS -->
         <div id="carrito-contenido">
             <div id="carrito-items"></div>
 
             <div class="carrito-resumen">
-                <p>Subtotal: <strong>s/.<span id="subtotal">0</span></strong></p>
-                <p>Envío: <strong>s/.10</strong></p>
-                <hr>
-                <p>Total: <strong>s/.<span id="total">0</span></strong></p>
+                <p class="resumen-titulo">Resumen del pedido</p>
+                <div class="resumen-linea">
+                    <span>Subtotal</span>
+                    <strong>s/.<span id="subtotal">0</span></strong>
+                </div>
+                <div class="resumen-linea">
+                    <span>Envío</span>
+                    <strong>s/.10</strong>
+                </div>
+                <div class="resumen-divider"></div>
+                <div class="resumen-linea resumen-total">
+                    <span>Total</span>
+                    <strong>s/.<span id="total">0</span></strong>
+                </div>
                 <a href="/checkout" class="btn-primary" id="btn-checkout">
                     Realizar pedido
                 </a>
@@ -53,7 +70,5 @@
     <footer>
         <p>&copy; 2026. Todos los derechos reservados.</p>
     </footer>
-
-    <script src="../static/app.js"></script>
 </body>
-</html>>
+</html>

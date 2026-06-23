@@ -3,78 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/static/styles.css">
     <title>Panel Admin - Golden Step</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: #111;
+            border-bottom: 1px solid #222;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #C9A84C;
+            letter-spacing: 2px;
+        }
+
+        .btn-logout {
+            color: #999;
+            text-decoration: none;
+            font-size: 13px;
+            padding: 8px 16px;
+            border: 1px solid #333;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background: #222;
+            color: #fff;
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: #C9A84C;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .section-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            color: #fff;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        /* CARDS */
+        .card-admin {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 14px;
+            transition: border-color 0.2s;
+        }
+
+        .card-admin:hover {
+            border-color: #C9A84C;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .card-meta {
+            font-size: 11px;
+            color: #555;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .card-nombre {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .card-info {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 4px;
+        }
+
+        .productos-lista {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #1e1e1e;
+        }
+
+        .producto-item {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .card-total {
+            font-size: 15px;
+            font-weight: 700;
+            color: #C9A84C;
+            margin-top: 12px;
+        }
+
+        /* BOTÓN ELIMINAR */
+        .btn-eliminar {
+            background: transparent;
+            color: #e05555;
+            padding: 8px 16px;
+            border-radius: 6px;
+            border: 1px solid #3a1a1a;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+
+        .btn-eliminar:hover {
+            background: #3a1a1a;
+            border-color: #e05555;
+        }
+
+        /* EMPTY STATE */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #444;
+            border: 1px dashed #222;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 1.5rem;
+            background: #111;
+            border-top: 1px solid #1e1e1e;
+            color: #444;
+            text-align: center;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
+
     <nav class="navbar">
         <div class="logo">GOLDEN STEP — ADMIN</div>
-        <a href="/admin/logout" style="color:white; text-decoration:none; font-size:14px;">Cerrar sesión</a>
+        <a href="/admin/logout" class="btn-logout">Cerrar sesión</a>
     </nav>
 
-    <main style="max-width:1100px; margin:40px auto; padding:0 20px;">
+    <main>
 
         <!-- PEDIDOS -->
-        <section style="margin-bottom:60px;">
-            <p style="font-size:11px; letter-spacing:4px; color:#C9A84C; font-weight:600;">PANEL</p>
-            <h2 style="font-size:24px; font-weight:700; margin-bottom:24px;">Pedidos ({{ pedidos|length }})</h2>
+        <section>
+            <p class="section-label">PANEL</p>
+            <h2 class="section-title">Pedidos ({{ pedidos|length }})</h2>
 
             {% if pedidos %}
                 {% for pedido in pedidos %}
-                <div style="background:white; border-radius:12px; padding:24px; margin-bottom:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div class="card-admin">
+                    <div class="card-header">
                         <div>
-                            <p style="font-size:11px; color:#999;">Pedido #{{ pedido.id }} — {{ pedido.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
-                            <h3 style="font-size:16px; font-weight:600; margin:6px 0;">{{ pedido.nombre }}</h3>
-                            <p style="font-size:14px; color:#555;">📞 {{ pedido.telefono }}</p>
-                            <p style="font-size:14px; color:#555;">📍 {{ pedido.direccion }}, {{ pedido.ciudad }}</p>
+                            <p class="card-meta">Pedido #{{ pedido.id }} — {{ pedido.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
+                            <p class="card-nombre">{{ pedido.nombre }}</p>
+                            <p class="card-info">📞 {{ pedido.telefono }}</p>
+                            <p class="card-info">📍 {{ pedido.direccion }}, {{ pedido.ciudad }}</p>
                             {% if pedido.referencia %}
-                            <p style="font-size:14px; color:#555;">Referencia: {{ pedido.referencia }}</p>
+                            <p class="card-info">Ref: {{ pedido.referencia }}</p>
                             {% endif %}
-                            <div style="margin-top:12px;">
+                            <div class="productos-lista">
                                 {% for producto in pedido.productos_lista %}
-                                <p style="font-size:13px; color:#777;">• {{ producto.nombre }} x{{ producto.cantidad }} — s/.{{ producto.precio * producto.cantidad }}</p>
+                                <p class="producto-item">• {{ producto.nombre }} x{{ producto.cantidad }} — s/.{{ producto.precio * producto.cantidad }}</p>
                                 {% endfor %}
                             </div>
-                            <p style="font-size:15px; font-weight:700; margin-top:10px; color:#111;">Total: s/.{{ pedido.total }}</p>
+                            <p class="card-total">Total: s/.{{ pedido.total }}</p>
                         </div>
-                        <a href="/admin/eliminar_pedido/{{ pedido.id }}" 
+                        <a href="/admin/eliminar_pedido/{{ pedido.id }}"
                            onclick="return confirm('¿Eliminar este pedido?')"
-                           style="background:#fee2e2; color:#991b1b; padding:8px 16px; border-radius:8px; text-decoration:none; font-size:13px; font-weight:600;">
-                            Eliminar
-                        </a>
+                           class="btn-eliminar">Eliminar</a>
                     </div>
                 </div>
                 {% endfor %}
             {% else %}
-                <p style="color:#999;">No hay pedidos aún.</p>
+                <div class="empty-state">No hay pedidos aún.</div>
             {% endif %}
         </section>
 
         <!-- MENSAJES -->
         <section>
-            <h2 style="font-size:24px; font-weight:700; margin-bottom:24px;">Mensajes ({{ mensajes|length }})</h2>
+            <h2 class="section-title">Mensajes ({{ mensajes|length }})</h2>
 
             {% if mensajes %}
                 {% for mensaje in mensajes %}
-                <div style="background:white; border-radius:12px; padding:24px; margin-bottom:16px; box-shadow:0 2px 12px rgba(0,0,0,0.06);">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div class="card-admin">
+                    <div class="card-header">
                         <div>
-                            <p style="font-size:11px; color:#999;">Mensaje #{{ mensaje.id }} — {{ mensaje.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
-                            <h3 style="font-size:16px; font-weight:600; margin:6px 0;">{{ mensaje.nombre }}</h3>
-                            <p style="font-size:14px; color:#555;">✉️ {{ mensaje.correo }}</p>
-                            <p style="font-size:14px; color:#444; margin-top:8px;">{{ mensaje.mensaje }}</p>
+                            <p class="card-meta">Mensaje #{{ mensaje.id }} — {{ mensaje.fecha.strftime('%d/%m/%Y %H:%M') }}</p>
+                            <p class="card-nombre">{{ mensaje.nombre }}</p>
+                            <p class="card-info">✉️ {{ mensaje.correo }}</p>
+                            <p class="card-info" style="margin-top:8px; color:#aaa;">{{ mensaje.mensaje }}</p>
                         </div>
                         <a href="/admin/eliminar_mensaje/{{ mensaje.id }}"
                            onclick="return confirm('¿Eliminar este mensaje?')"
-                           style="background:#fee2e2; color:#991b1b; padding:8px 16px; border-radius:8px; text-decoration:none; font-size:13px; font-weight:600;">
-                            Eliminar
-                        </a>
+                           class="btn-eliminar">Eliminar</a>
                     </div>
                 </div>
                 {% endfor %}
             {% else %}
-                <p style="color:#999;">No hay mensajes aún.</p>
+                <div class="empty-state">No hay mensajes aún.</div>
             {% endif %}
         </section>
 
@@ -83,5 +249,6 @@
     <footer>
         <p>&copy; 2026. Todos los derechos reservados.</p>
     </footer>
+
 </body>
 </html>
