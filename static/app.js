@@ -180,7 +180,7 @@ function renderizarCarrito() {
             <img src="${item.img}" alt="${item.nombre}">
             <div class="carrito-item-info">
                 <h3>${item.nombre}</h3>
-                <p style="font-size:12px; color:#C9A84C;">Talla: ${item.talla} | Color: ${item.color}</p>
+               <p class="carrito-item-talla-color">Talla: ${item.talla} &nbsp;|&nbsp; Color: ${item.color}</p>
                 <p>s/.${item.precio}</p>
                 <div class="carrito-item-controles">
                     <div class="carrito-item-cantidad">
