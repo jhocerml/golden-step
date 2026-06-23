@@ -1,9 +1,7 @@
 /*Código para el boton tipo hamburguesa en dispositivos móviles*/
-
 document.addEventListener('DOMContentLoaded', () => {
     const burger = document.querySelector('.burger');
     const navLinks = document.querySelector('.nav-links');
-
     if (burger) {
         burger.addEventListener('click', () => {
             navLinks.classList.toggle('active');
@@ -12,21 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /*Código para hacer funcionar el formulario */
-
 const contactForm = document.getElementById('contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', function(event) {
-        event.preventDefault(); 
-
-        const submitButton = this.querySelector('button[type="submit"]'); 
-        submitButton.classList.add('loading'); 
-
+        event.preventDefault();
+        const submitButton = this.querySelector('button[type="submit"]');
+        submitButton.classList.add('loading');
         const formData = new FormData(this);
-
-        fetch('/send_email', {
-            method: 'POST',
-            body: formData
-        })
+        fetch('/send_email', { method: 'POST', body: formData })
         .then(response => response.text())
         .then(data => {
             showFlashMessage('Mensaje enviado correctamente.', 'success');
@@ -36,7 +27,7 @@ if (contactForm) {
         .catch(error => {
             showFlashMessage('Hubo un error al enviar el mensaje.', 'danger');
             console.error('Error:', error);
-            submitButton.classList.remove('loading'); 
+            submitButton.classList.remove('loading');
         });
     });
 }
@@ -47,9 +38,7 @@ function showFlashMessage(message, category) {
     flashMessage.className = `alert ${category}`;
     flashMessage.textContent = message;
     flashContainer.appendChild(flashMessage);
-    setTimeout(() => {
-        flashMessage.remove();
-    }, 5000);
+    setTimeout(() => { flashMessage.remove(); }, 5000);
 }
 
 // ==================
@@ -72,27 +61,14 @@ function actualizarContador() {
     if (contador) contador.textContent = total;
 }
 
-// Selección de talla y color
-document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('opcion-talla')) {
-        const grupo = e.target.closest('.tallas');
-        grupo.querySelectorAll('.opcion-talla').forEach(b => b.classList.remove('selected'));
-        e.target.classList.add('selected');
-    }
-    if (e.target.classList.contains('opcion-color')) {
-        const grupo = e.target.closest('.colores');
-        grupo.querySelectorAll('.opcion-color').forEach(b => b.classList.remove('selected'));
-        e.target.classList.add('selected');
-    }
-});
-
+// ==================
 // MODAL
+// ==================
+
 let productoActual = {};
 
 document.addEventListener('click', function(e) {
     if (e.target.classList.contains('btn-carrito')) {
-        const card = e.target.closest('.card');
-        
         productoActual = {
             nombre: e.target.dataset.nombre,
             precio: parseFloat(e.target.dataset.precio),
@@ -101,24 +77,20 @@ document.addEventListener('click', function(e) {
             colores: e.target.dataset.colores
         };
 
-        // Llenar modal
         document.getElementById('modal-img').src = productoActual.img;
         document.getElementById('modal-nombre').textContent = productoActual.nombre;
         document.getElementById('modal-precio').textContent = 's/.' + productoActual.precio;
 
-        // Tallas
         const tallasDiv = document.getElementById('modal-tallas');
         tallasDiv.innerHTML = productoActual.tallas.split(',').map(t =>
             `<button type="button">${t.trim()}</button>`
         ).join('');
 
-        // Colores
         const coloresDiv = document.getElementById('modal-colores');
         coloresDiv.innerHTML = productoActual.colores.split(',').map(c =>
             `<button type="button">${c.trim()}</button>`
         ).join('');
 
-        // Mostrar modal
         document.getElementById('modal-producto').style.display = 'flex';
     }
 });
@@ -135,19 +107,55 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// Cerrar modal
-document.getElementById('modal-cerrar').addEventListener('click', () => {
-    document.getElementById('modal-producto').style.display = 'none';
-});
+if (document.getElementById('modal-cerrar')) {
+    document.getElementById('modal-cerrar').addEventListener('click', () => {
+        document.getElementById('modal-producto').style.display = 'none';
+    });
 
-document.getElementById('modal-producto').addEventListener('click', function(e) {
-    if (e.target === this) this.style.display = 'none';
-});
+    document.getElementById('modal-producto').addEventListener('click', function(e) {
+        if (e.target === this) this.style.display = 'none';
+    });
 
-// Confirmar agregar al carrito
-document.getElementById('modal-confirmar').addEventListener('click', () => {
+    document.getElementById('modal-confirmar').addEventListener('click', () => {
+        const talla = document.querySelector('#modal-tallas button.selected');
+        const color = document.querySelector('#modal-colores button.selected');
 
-// Si estamos en la página /carrito
+        if (!talla) { alert('Por favor selecciona una talla'); return; }
+        if (!color) { alert('Por favor selecciona un color'); return; }
+
+        let carrito = obtenerCarrito();
+        const existe = carrito.find(item =>
+            item.nombre === productoActual.nombre &&
+            item.talla === talla.textContent &&
+            item.color === color.textContent
+        );
+
+        if (existe) {
+            existe.cantidad += 1;
+        } else {
+            carrito.push({
+                nombre: productoActual.nombre,
+                precio: productoActual.precio,
+                img: productoActual.img,
+                talla: talla.textContent,
+                color: color.textContent,
+                cantidad: 1
+            });
+        }
+
+        guardarCarrito(carrito);
+        document.getElementById('modal-producto').style.display = 'none';
+
+        const btnConfirmar = document.getElementById('modal-confirmar');
+        btnConfirmar.textContent = '✓ Agregado';
+        setTimeout(() => btnConfirmar.textContent = 'Agregar al carrito', 1500);
+    });
+}
+
+// ==================
+// PÁGINA CARRITO
+// ==================
+
 if (document.getElementById('carrito-items')) {
     renderizarCarrito();
 }
@@ -172,6 +180,7 @@ function renderizarCarrito() {
             <img src="${item.img}" alt="${item.nombre}">
             <div class="carrito-item-info">
                 <h3>${item.nombre}</h3>
+                <p style="font-size:12px; color:#C9A84C;">Talla: ${item.talla} | Color: ${item.color}</p>
                 <p>s/.${item.precio}</p>
                 <div class="carrito-item-controles">
                     <div class="carrito-item-cantidad">
@@ -188,7 +197,7 @@ function renderizarCarrito() {
 
     const subtotal = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
     document.getElementById('subtotal').textContent = subtotal;
-    document.getElementById('total').textContent = subtotal + 0; // Envío gratis
+    document.getElementById('total').textContent = subtotal + 0;
 }
 
 function cambiarCantidad(index, cambio) {
@@ -215,7 +224,6 @@ if (btnVaciar) {
     });
 }
 
-// Actualizar contador al cargar cualquier página
 actualizarContador();
 
 // ==================
@@ -240,6 +248,7 @@ function cargarResumenCheckout() {
             <img src="${item.img}" alt="${item.nombre}">
             <div>
                 <p>${item.nombre}</p>
+                <p style="font-size:11px; color:#C9A84C;">Talla: ${item.talla} | Color: ${item.color}</p>
                 <p>x${item.cantidad}</p>
             </div>
             <p>s/.${item.precio * item.cantidad}</p>
@@ -248,14 +257,13 @@ function cargarResumenCheckout() {
 
     const subtotal = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
     document.getElementById('checkout-subtotal').textContent = 's/.' + subtotal;
-    document.getElementById('checkout-total').textContent = 's/.' + (subtotal + 0); // Envío gratis
+    document.getElementById('checkout-total').textContent = 's/.' + (subtotal + 0);
 }
 
 const checkoutForm = document.getElementById('checkout-form');
 if (checkoutForm) {
     checkoutForm.addEventListener('submit', function(e) {
         e.preventDefault();
-
         const carrito = obtenerCarrito();
         const subtotal = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
 
@@ -266,7 +274,7 @@ if (checkoutForm) {
             ciudad: document.getElementById('ciudad').value,
             referencia: document.getElementById('referencia').value,
             productos: carrito,
-            total: subtotal + 0 // Envío gratis
+            total: subtotal + 0
         };
 
         fetch('/guardar_pedido', {
