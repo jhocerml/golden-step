@@ -146,40 +146,6 @@ document.getElementById('modal-producto').addEventListener('click', function(e) 
 
 // Confirmar agregar al carrito
 document.getElementById('modal-confirmar').addEventListener('click', () => {
-    const talla = document.querySelector('#modal-tallas button.selected');
-    const color = document.querySelector('#modal-colores button.selected');
-
-    if (!talla) { alert('Por favor selecciona una talla'); return; }
-    if (!color) { alert('Por favor selecciona un color'); return; }
-
-    let carrito = obtenerCarrito();
-    const existe = carrito.find(item =>
-        item.nombre === productoActual.nombre &&
-        item.talla === talla.textContent &&
-        item.color === color.textContent
-    );
-
-    if (existe) {
-        existe.cantidad += 1;
-    } else {
-        carrito.push({
-            nombre: productoActual.nombre,
-            precio: productoActual.precio,
-            img: productoActual.img,
-            talla: talla.textContent,
-            color: color.textContent,
-            cantidad: 1
-        });
-    }
-
-    guardarCarrito(carrito);
-    document.getElementById('modal-producto').style.display = 'none';
-
-    // Feedback visual
-    const btnConfirmar = document.getElementById('modal-confirmar');
-    btnConfirmar.textContent = '✓ Agregado';
-    setTimeout(() => btnConfirmar.textContent = 'Agregar al carrito', 1500);
-});
 
 // Si estamos en la página /carrito
 if (document.getElementById('carrito-items')) {
