@@ -758,3 +758,45 @@ footer {
     color: #C9A84C;
     font-size: 18px;
 }
+
+/* Selectores talla y color */
+.selector-grupo {
+    margin-bottom: 10px;
+}
+
+.selector-grupo label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #888;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.selector-opciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.opcion-talla, .opcion-color {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.opcion-talla:hover, .opcion-color:hover {
+    border-color: #C9A84C;
+    color: #C9A84C;
+}
+
+.opcion-talla.selected, .opcion-color.selected {
+    background: #000;
+    color: #C9A84C;
+    border-color: #000;
+}

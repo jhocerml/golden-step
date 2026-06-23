@@ -72,27 +72,55 @@ function actualizarContador() {
     if (contador) contador.textContent = total;
 }
 
-// Botones "Agregar al carrito"
-document.querySelectorAll('.btn-carrito').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const nombre = btn.dataset.nombre;
-        const precio = parseFloat(btn.dataset.precio);
-        const img = btn.dataset.img;
+// Selección de talla y color
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('opcion-talla')) {
+        const grupo = e.target.closest('.tallas');
+        grupo.querySelectorAll('.opcion-talla').forEach(b => b.classList.remove('selected'));
+        e.target.classList.add('selected');
+    }
+    if (e.target.classList.contains('opcion-color')) {
+        const grupo = e.target.closest('.colores');
+        grupo.querySelectorAll('.opcion-color').forEach(b => b.classList.remove('selected'));
+        e.target.classList.add('selected');
+    }
+});
+
+// Agregar al carrito con talla y color
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-carrito')) {
+        const card = e.target.closest('.card');
+        const tallaSeleccionada = card.querySelector('.opcion-talla.selected');
+        const colorSeleccionado = card.querySelector('.opcion-color.selected');
+
+        if (!tallaSeleccionada) {
+            alert('Por favor selecciona una talla');
+            return;
+        }
+        if (!colorSeleccionado) {
+            alert('Por favor selecciona un color');
+            return;
+        }
+
+        const nombre = e.target.dataset.nombre;
+        const precio = parseFloat(e.target.dataset.precio);
+        const img = e.target.dataset.img;
+        const talla = tallaSeleccionada.textContent;
+        const color = colorSeleccionado.textContent;
 
         let carrito = obtenerCarrito();
-        const existe = carrito.find(item => item.nombre === nombre);
+        const existe = carrito.find(item => item.nombre === nombre && item.talla === talla && item.color === color);
 
         if (existe) {
             existe.cantidad += 1;
         } else {
-            carrito.push({ nombre, precio, img, cantidad: 1 });
+            carrito.push({ nombre, precio, img, talla, color, cantidad: 1 });
         }
 
         guardarCarrito(carrito);
-
-        btn.textContent = '✓ Agregado';
-        setTimeout(() => btn.textContent = 'Agregar al carrito', 1500);
-    });
+        e.target.textContent = '✓ Agregado';
+        setTimeout(() => e.target.textContent = 'agregar al carrito', 1500);
+    }
 });
 
 // Si estamos en la página /carrito

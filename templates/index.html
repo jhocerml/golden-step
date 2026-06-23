@@ -53,10 +53,30 @@
                         <h3>{{ p.nombre }}</h3>
                         <p>{{ p.descripcion }}</p>
                         <p class="price">Desde s/.{{ p.precio | int }}</p>
+
+                        <div class="selector-grupo">
+                            <label>Talla</label>
+                            <div class="selector-opciones tallas" data-id="{{ p.id }}">
+                                {% for talla in p.tallas.split(',') %}
+                                <button type="button" class="opcion-talla">{{ talla.strip() }}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <div class="selector-grupo">
+                            <label>Color</label>
+                            <div class="selector-opciones colores" data-id="{{ p.id }}">
+                                {% for color in p.colores.split(',') %}
+                                <button type="button" class="opcion-color">{{ color.strip() }}</button>
+                                {% endfor %}
+                            </div>
+                        </div>
+
                         <button class="btn-carrito"
                             data-nombre="{{ p.nombre }}"
                             data-precio="{{ p.precio }}"
-                            data-img="/static/{{ p.imagen }}">
+                            data-img="/static/{{ p.imagen }}"
+                            data-id="{{ p.id }}">
                             agregar al carrito
                         </button>
                     </div>
