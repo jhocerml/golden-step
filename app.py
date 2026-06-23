@@ -218,18 +218,18 @@ with app.app_context():
 
     if not Producto.query.first():
         productos_iniciales = [
-            Producto(nombre='Colección Verano', descripcion='Piezas ligeras para días cálidos', precio=90, imagen='3.avif', tag='Nuevo', categoria='mujer', tipo='zapatillas'),
-            Producto(nombre='Colección Noche', descripcion='Elegancia para ocasiones especiales', precio=129, imagen='22.jpeg', tag='Popular', categoria='mujer', tipo='zapatillas'),
-            Producto(nombre='Colección Casual', descripcion='Comodidad y estilo en cada paso', precio=59, imagen='11.jpeg', tag=None, categoria='mujer', tipo='accesorios'),
-            Producto(nombre='Modelo Clásico', descripcion='Diseño atemporal para cualquier ocasión', precio=75, imagen='0.jpeg', tag=None, categoria='hombre', tipo='zapatillas'),
-            Producto(nombre='Edición Urbana', descripcion='Para el ritmo de la ciudad', precio=110, imagen='8.jpeg', tag='Popular', categoria='hombre', tipo='zapatillas'),
+            Producto(nombre='Colección Verano', descripcion='Piezas ligeras para días cálidos', precio=120, imagen='3.avif', tag='Nuevo', categoria='mujer', tipo='zapatillas'),
+            Producto(nombre='Colección Noche', descripcion='Elegancia para ocasiones especiales', precio=100, imagen='22.jpeg', tag='Popular', categoria='mujer', tipo='zapatillas'),
+            Producto(nombre='Colección Casual', descripcion='Comodidad y estilo en cada paso', precio=120, imagen='11.jpeg', tag=None, categoria='mujer', tipo='accesorios'),
+            Producto(nombre='Modelo Clásico', descripcion='Diseño atemporal para cualquier ocasión', precio=90, imagen='0.jpeg', tag=None, categoria='hombre', tipo='zapatillas'),
+            Producto(nombre='Edición Urbana', descripcion='Para el ritmo de la ciudad', precio=99, imagen='8.jpeg', tag='Popular', categoria='hombre', tipo='zapatillas'),
             Producto(nombre='Sport Plus', descripcion='Rendimiento y comodidad al máximo', precio=95, imagen='9.jpeg', tag='Nuevo', categoria='hombre', tipo='accesorios'),
-            Producto(nombre='Colección Premium', descripcion='Materiales de primera calidad', precio=149, imagen='14.jpeg', tag=None, categoria='hombre', tipo='zapatillas'),
-            Producto(nombre='Estilo Retro', descripcion='El look clásico que nunca pasa de moda', precio=85, imagen='77.jpeg', tag=None, categoria='niños', tipo='zapatillas'),
+            Producto(nombre='Colección Premium', descripcion='Materiales de primera calidad', precio=95, imagen='14.jpeg', tag=None, categoria='hombre', tipo='zapatillas'),
+            Producto(nombre='Estilo Retro', descripcion='El look clásico que nunca pasa de moda', precio=120, imagen='77.jpeg', tag=None, categoria='niños', tipo='zapatillas'),
             Producto(nombre='Colección Street', descripcion='Moda urbana con actitud', precio=99, imagen='88.jpeg', tag='Popular', categoria='niños', tipo='zapatillas'),
-            Producto(nombre='Modelo Deportivo', descripcion='Ideal para el día a día activo', precio=80, imagen='331.jpeg', tag=None, categoria='niños', tipo='accesorios'),
-            Producto(nombre='Edición Limitada', descripcion='Exclusividad en cada detalle', precio=189, imagen='441.jpeg', tag='Nuevo', categoria='mujer', tipo='accesorios'),
-            Producto(nombre='Colección Everyday', descripcion='Para lucir bien todos los días', precio=69, imagen='pp.jpeg', tag=None, categoria='hombre', tipo='accesorios'),
+            Producto(nombre='Modelo Deportivo', descripcion='Ideal para el día a día activo', precio=120, imagen='331.jpeg', tag=None, categoria='niños', tipo='accesorios'),
+            Producto(nombre='Edición Limitada', descripcion='Exclusividad en cada detalle', precio=90, imagen='441.jpeg', tag='Nuevo', categoria='mujer', tipo='accesorios'),
+            Producto(nombre='Colección Everyday', descripcion='Para lucir bien todos los días', precio=100, imagen='pp.jpeg', tag=None, categoria='hombre', tipo='accesorios'),
         ]
         db.session.add_all(productos_iniciales)
         db.session.commit()
