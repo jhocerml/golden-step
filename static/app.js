@@ -196,7 +196,7 @@ function cargarResumenCheckout() {
 
     const subtotal = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
     document.getElementById('checkout-subtotal').textContent = 's/.' + subtotal;
-    document.getElementById('checkout-total').textContent = 's/.' + (subtotal + 10);
+    document.getElementById('checkout-total').textContent = 's/.' + (subtotal + 0); // Envío gratis
 }
 
 const checkoutForm = document.getElementById('checkout-form');
@@ -214,7 +214,7 @@ if (checkoutForm) {
             ciudad: document.getElementById('ciudad').value,
             referencia: document.getElementById('referencia').value,
             productos: carrito,
-            total: subtotal + 10
+            total: subtotal + 0 // Envío gratis
         };
 
         fetch('/guardar_pedido', {
