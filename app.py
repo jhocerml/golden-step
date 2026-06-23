@@ -205,8 +205,8 @@ def eliminar_mensaje(id):
     return redirect(url_for('admin_panel'))
 
 with app.app_context():
+    db.drop_all()
     db.create_all()
-
     if not Admin.query.filter_by(usuario=os.getenv('ADMIN_USUARIO')).first():
         admin = Admin(
             usuario=os.getenv('ADMIN_USUARIO'),
