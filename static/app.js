@@ -136,7 +136,7 @@ function renderizarCarrito() {
 
     const subtotal = carrito.reduce((sum, item) => sum + item.precio * item.cantidad, 0);
     document.getElementById('subtotal').textContent = subtotal;
-    document.getElementById('total').textContent = subtotal + 10;
+    document.getElementById('total').textContent = subtotal + 0; // Envío gratis
 }
 
 function cambiarCantidad(index, cambio) {
